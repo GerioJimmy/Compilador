@@ -5,140 +5,32 @@
  */
 package codigo;
 
-import static codigo.Tokens.Identificador;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
-import java.nio.file.Files;
+import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 
 /**
  *
- * @author Rogerio
+ * @author Charly Ponce
  */
 public class FrmPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmPrincipal
      */
+    ProdutoTableModel tablemodel = new ProdutoTableModel();
+    
     public FrmPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
-    }
-    
-    private void analizarLexico() throws IOException{
-        int cont = 1;
         
-        String expr = (String) txtResultado.getText();
-        Lexer lexer = new Lexer(new StringReader(expr));
-        String resultado = "LINHA " + cont + "\t\tTOKEN\n";
-        while (true) {
-            Tokens token = lexer.yylex();
-            if (token == null) {
-                txtAnalizarLex.setText(resultado);
-                return;
-            }
-            switch (token) {
-                case Linea:
-                    cont++;
-                    resultado += "LINHA " + cont + "\n";
-                    break;
-                case Comillas:
-                    resultado += "  <citacoes>\t\t" + lexer.lexeme + "\n";
-                    break;
-                case Cadena:
-                    resultado += "  <Tipo de dado>\t" + lexer.lexeme + "\n";
-                    break;
-                case T_dato:
-                    resultado += "  <Tipo de dado>\t" + lexer.lexeme + "\n";
-                    break;
-                case If:
-                    resultado += "  <Reservada if>\t" + lexer.lexeme + "\n";
-                    break;
-                case Else:
-                    resultado += "  <Reservada else>\t" + lexer.lexeme + "\n";
-                    break;
-                case Do:
-                    resultado += "  <Reservada do>\t" + lexer.lexeme + "\n";
-                    break;
-                case While:
-                    resultado += "  <Reservada while>\t" + lexer.lexeme + "\n";
-                    break;
-                case For:
-                    resultado += "  <Reservada while>\t" + lexer.lexeme + "\n";
-                    break;
-                case Igual:
-                    resultado += "  <Operador igual>\t" + lexer.lexeme + "\n";
-                    break;
-                case Suma:
-                    resultado += "  <Operador soma>\t" + lexer.lexeme + "\n";
-                    break;
-                case Resta:
-                    resultado += "  <Operador subtrai>\t" + lexer.lexeme + "\n";
-                    break;
-                case Multiplicacion:
-                    resultado += "  <Operador multiplicacao>\t" + lexer.lexeme + "\n";
-                    break;
-                case Division:
-                    resultado += "  <Operador divisao>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_logico:
-                    resultado += "  <Operador logico>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_incremento:
-                    resultado += "  <Operador incremento>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_relacional:
-                    resultado += "  <Operador relacional>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_atribucion:
-                    resultado += "  <Operador atribuicao>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_booleano:
-                    resultado += "  <Operador booleano>\t" + lexer.lexeme + "\n";
-                    break;
-                case Parentesis_a:
-                    resultado += "  <parenteses de abertura>\t" + lexer.lexeme + "\n";
-                    break;
-                case Parentesis_c:
-                    resultado += "  <Parenteses de encerramento>\t" + lexer.lexeme + "\n";
-                    break;
-                case Llave_a:
-                    resultado += "  <chave de abertura>\t" + lexer.lexeme + "\n";
-                    break;
-                case Llave_c:
-                    resultado += "  <chave de encerramento>\t" + lexer.lexeme + "\n";
-                    break;
-                case Corchete_a:
-                    resultado += "  <colchetes de abertura>\t" + lexer.lexeme + "\n";
-                    break;
-                case Corchete_c:
-                    resultado += "  <colchetes de encerramento>\t" + lexer.lexeme + "\n";
-                    break;
-                case Begin:
-                    resultado += "  <Reservada begin>\t" + lexer.lexeme + "\n";
-                    break;
-                case P_coma:
-                    resultado += "  <Ponto e virgula>\t" + lexer.lexeme + "\n";
-                    break;
-                case Identificador:
-                    resultado += "  <Identificador>\t\t" + lexer.lexeme + "\n";
-                    break;
-                case Numero:
-                    resultado += "  <Numero>\t\t" + lexer.lexeme + "\n";
-                    break;
-                case ERROR:
-                    resultado += "  <Simbolo no definido>\n";
-                    break;
-                default:
-                    resultado += "  < " + lexer.lexeme + " >\n";
-                    break;
-            
-            }
-        }
+        jTProdutos.setModel(tablemodel);
     }
 
     /**
@@ -150,131 +42,164 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        btnArchivo = new javax.swing.JButton();
+        jFrame1 = new javax.swing.JFrame();
+        txtEntrada = new javax.swing.JTextField();
+        btnAnalizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtResultado = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        txtAnalizarLex = new javax.swing.JTextArea();
-        btnAnalizarLex = new javax.swing.JButton();
-        btnLimpiarLex = new javax.swing.JButton();
+        jTProdutos = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtEntradaTudo = new javax.swing.JTextArea();
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Analizador Lexico", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
-
-        btnArchivo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnArchivo.setText("Abrir arquivo");
-        btnArchivo.addActionListener(new java.awt.event.ActionListener() {
+        txtEntrada.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        txtEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnArchivoActionPerformed(evt);
+                txtEntradaActionPerformed(evt);
+            }
+        });
+
+        btnAnalizar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAnalizar.setText("Analisar");
+        btnAnalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnalizarActionPerformed(evt);
             }
         });
 
         txtResultado.setColumns(20);
         txtResultado.setRows(5);
+        txtResultado.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jScrollPane1.setViewportView(txtResultado);
 
-        txtAnalizarLex.setEditable(false);
-        txtAnalizarLex.setColumns(20);
-        txtAnalizarLex.setRows(5);
-        jScrollPane2.setViewportView(txtAnalizarLex);
-
-        btnAnalizarLex.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnAnalizarLex.setText("Analisar");
-        btnAnalizarLex.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnalizarLexActionPerformed(evt);
+        jTProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Item", "Tipo", "Linha", "Coluna"
             }
-        });
+        ));
+        jScrollPane2.setViewportView(jTProdutos);
 
-        btnLimpiarLex.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnLimpiarLex.setText("Limpar");
-        btnLimpiarLex.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarLexActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 239, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAnalizarLex)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLimpiarLex))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(386, Short.MAX_VALUE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnArchivo)
-                    .addComponent(btnAnalizarLex)
-                    .addComponent(btnLimpiarLex))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 50, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        txtEntradaTudo.setColumns(20);
+        txtEntradaTudo.setRows(5);
+        jScrollPane3.setViewportView(txtEntradaTudo);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(263, 263, 263)
+                .addComponent(btnAnalizar, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                .addGap(195, 195, 195))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(txtEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(btnAnalizar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(txtEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
-
-        jPanel1.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivoActionPerformed
+    private void btnAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarActionPerformed
         // TODO add your handling code here:
-        JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-        File arquivo = new File(chooser.getSelectedFile().getAbsolutePath());
+        Produto p = new Produto();
+
+        File arquivo = new File("arquivo.txt");
+        PrintWriter escribir;
+        try {
+            escribir = new PrintWriter(arquivo);
+            escribir.print(txtEntrada.getText());
+            p.setDescricao(txtEntrada.getText());
+            p.setDescricao(txtEntradaTudo.getText());
+            tablemodel.addRow(p);
+            escribir.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         try {
-            String ST = new String(Files.readAllBytes(arquivo.toPath()));
-            txtResultado.setText(ST);
+            Reader lector = new BufferedReader(new FileReader("arquivo.txt"));
+            Lexer lexer = new Lexer(lector);
+            String resultado = "";
+            String resultado1 = "";
+            while (true) {
+                Tokens tokens = lexer.yylex();
+                if (tokens == null) {
+                    resultado += "FIM";
+                    txtResultado.setText(resultado);
+                    p.setToken(resultado);
+                    return;
+                }
+                switch (tokens) {
+                    case ERROR:
+                        resultado += "Simbolo nao definido\n";
+                        p.setToken(resultado);
+                        break;
+                    case Identificador: case Numero: case P_reservadas:
+                        resultado += lexer.lexeme + ": E um " + tokens ;
+                        resultado1 += tokens;
+                        p.setToken(resultado1);
+                        break;
+                    default:
+                        resultado +=  tokens + "\n";
+                        p.setToken(resultado);
+                        break;
+                }
+            }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnArchivoActionPerformed
+    }//GEN-LAST:event_btnAnalizarActionPerformed
 
-    private void btnLimpiarLexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarLexActionPerformed
+    private void txtEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEntradaActionPerformed
         // TODO add your handling code here:
-        txtAnalizarLex.setText(null);
-    }//GEN-LAST:event_btnLimpiarLexActionPerformed
-
-    private void btnAnalizarLexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarLexActionPerformed
-        try {
-            analizarLexico();
-        } catch (IOException ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnAnalizarLexActionPerformed
+    }//GEN-LAST:event_txtEntradaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,13 +237,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAnalizarLex;
-    private javax.swing.JButton btnArchivo;
-    private javax.swing.JButton btnLimpiarLex;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnAnalizar;
+    private javax.swing.JFrame jFrame1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea txtAnalizarLex;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTProdutos;
+    private javax.swing.JTextField txtEntrada;
+    private javax.swing.JTextArea txtEntradaTudo;
     private javax.swing.JTextArea txtResultado;
     // End of variables declaration//GEN-END:variables
 }

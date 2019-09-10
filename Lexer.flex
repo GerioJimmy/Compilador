@@ -5,43 +5,43 @@ import static codigo.Tokens.*;
 %type Tokens
 L=[a-zA-Z_]+
 D=[0-9]+
-espaco=[ ,\t,\r]+
+espacio=[ ,\t,\r]+
 %{
     public String lexeme;
 %}
 %%
 
-/* Espacos em branco */
-{espaco} {/*Ignore*/}
+/* Espacios en blanco */
+{espacio} {/*Ignore*/}
 
 /* Comentarios */
 ( "//"(.)* ) {/*Ignore*/}
 
-/* Salto de linha */
+/* Salto de linea */
 ( "\n" ) {return Linea;}
 
 /* Comillas */
 ( "\"" ) {lexeme=yytext(); return Comillas;}
 
-/* Tipos de dados */
-( byte | int | char | long | float | double | boolean  ) {lexeme=yytext(); return T_dato;}
+/* Tipos de datos */
+( byte | int | char | long | float | double ) {lexeme=yytext(); return T_dato;}
 
 /* Tipo de dato String */
 ( String ) {lexeme=yytext(); return Cadena;}
 
-/* Palavra reservada If */
+/* Palabra reservada If */
 ( if ) {lexeme=yytext(); return If;}
 
-/* Palavra reservada Else */
+/* Palabra reservada Else */
 ( else ) {lexeme=yytext(); return Else;}
 
-/* Palavra reservada Do */
+/* Palabra reservada Do */
 ( do ) {lexeme=yytext(); return Do;}
 
-/* Palavra reservada While */
+/* Palabra reservada While */
 ( while ) {lexeme=yytext(); return While;}
 
-/* Palavra reservada For */
+/* Palabra reservada For */
 ( for ) {lexeme=yytext(); return For;}
 
 /* Operador Igual */
@@ -74,26 +74,26 @@ espaco=[ ,\t,\r]+
 /*Operadores Booleanos*/
 (true | false)      {lexeme = yytext(); return Op_booleano;}
 
-/* Parenteses de abertura */
+/* Parentesis de apertura */
 ( "(" ) {lexeme=yytext(); return Parentesis_a;}
 
-/* Parenteses de encerramento */
+/* Parentesis de cierre */
 ( ")" ) {lexeme=yytext(); return Parentesis_c;}
 
-/* Chave de abertura */
+/* Llave de apertura */
 ( "{" ) {lexeme=yytext(); return Llave_a;}
 
-/* Chave de encerramento */
+/* Llave de cierre */
 ( "}" ) {lexeme=yytext(); return Llave_c;}
 
-/* Chave de abertura */
+/* Corchete de apertura */
 ( "[" ) {lexeme = yytext(); return Corchete_a;}
 
-/* Chave de encerramento */
+/* Corchete de cierre */
 ( "]" ) {lexeme = yytext(); return Corchete_c;}
 
 /* Marcador de inicio de algoritmo */
-( "begin" ) {lexeme=yytext(); return Begin;}
+( "main" ) {lexeme=yytext(); return Main;}
 
 /* Punto y coma */
 ( ";" ) {lexeme=yytext(); return P_coma;}

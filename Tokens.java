@@ -7,36 +7,15 @@ package codigo;
 
 /**
  *
- * @author Rogerio
+ * @author Gerio
  */
 public enum Tokens {
-    Linea,
-    Comillas,
-    T_dato,
-    Cadena,
-    If,
-    Else,
-    Do,
-    While,
-    For,
+    P_reservadas,
     Igual,
-    Suma,
-    Resta,
-    Multiplicacion,
+    Soma,
+    Subtracao,
+    Multiplicacao,
     Division,
-    Op_logico,
-    Op_incremento,
-    Op_relacional,
-    Op_atribucion,
-    Op_booleano,
-    Parentesis_a,
-    Parentesis_c,
-    Llave_a,
-    Llave_c,
-    Corchete_a,
-    Corchete_c,
-    Begin,
-    P_coma,
     Identificador,
     Numero,
     ERROR
